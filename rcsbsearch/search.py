@@ -208,6 +208,9 @@ class Terminal(Query):
     negation: bool = False
     node_id: int = 0
 
+    if attribute == "chem_comp.name":
+        service = "text_comp"
+
     def to_dict(self):
         params = dict()
         if self.attribute is not None:
@@ -216,7 +219,7 @@ class Terminal(Query):
             params["operator"] = self.operator
         if self.value is not None:
             params["value"] = self.value
-        if self.negation is not None:
+        if self.negation is not None and self.negation:
             params["negation"] = self.negation
 
         return dict(
@@ -274,14 +277,14 @@ class Terminal(Query):
 class TextQuery(Terminal):
     """Special case of a Terminal for free-text queries"""
 
-    def __init__(self, value: str, negation: bool = False):
+    def __init__(self, value: str, service: str = "full_text", negation: bool = False):
         """Search for the string value anywhere in the text
 
         Args:
             value: free-text query
             negation: find structures without the pattern
         """
-        super().__init__(value=value, negation=negation)
+        super().__init__(value=value, service=service, negation=negation)
 
 
 @dataclass(frozen=True)
@@ -416,6 +419,9 @@ class Attr:
             value = value.value
         if isinstance(value, list):
             value = " ".join(value)
+        if self.attribute =="chem_comp.name":
+            service = "text_chem"
+            return Terminal(self.attribute, "contains_words", value, service)
         return Terminal(self.attribute, "contains_words", value)
 
     def contains_phrase(self, value: Union[str, "Value[str]"]) -> Terminal:
@@ -974,7 +980,7 @@ class Session(Iterable[str]):
     Handles paging the query and parsing results
     """
 
-    url = "http://search.rcsb.org/rcsbsearch/v1/query"
+    url = "https://search.rcsb.org/rcsbsearch/v1/query"
     query_id: str
     query: Query
     return_type: ReturnType
@@ -1022,7 +1028,7 @@ class Session(Iterable[str]):
             f"Querying {self.url} for results {start}-{start + self.rows - 1}"
         )
         response = requests.get(
-            self.url, {"json": json.dumps(params, separators=(",", ":"))}
+            self.url, params={"json": json.dumps(params, separators=(",", ":"))}
         )
         response.raise_for_status()
         if response.status_code == requests.codes.OK:
