@@ -12,6 +12,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from datetime import date
 from typing import (
+    Any,
     Callable,
     Dict,
     Generic,
@@ -343,7 +344,7 @@ class Group(Query):
             return (self, node_id)
 
     def __str__(self):
-        ""  # hide in documentation
+        """"""  # hide in documentation
         if self.operator == "and":
             return f"({' & '.join((str(n) for n in self.nodes))})"
         elif self.operator == "or":
@@ -378,7 +379,7 @@ class Attr:
     +--------------------+---------------------+
     | equals             | attr == date,number |
     +--------------------+---------------------+
-    | range              | attr[start:end]     |
+    | range              | dict (keys below)*  |
     +--------------------+---------------------+
     | exists             | bool(attr)          |
     +--------------------+---------------------+
@@ -392,6 +393,11 @@ class Attr:
     than constructing Attr objects by hand. A complete list of valid attributes is
     available in the `schema <http://search.rcsb.org/rcsbsearch/v2/metadata/schema>`_.
 
+    * The `range` dictionary requires the following keys:
+      * "from" -> int
+      * "to" -> int
+      * "include_lower" -> bool
+      * "include_upper" -> bool
     """
 
     attribute: str
@@ -452,7 +458,7 @@ class Attr:
             value = value.value
         return Terminal(self.attribute, "equals", value)
 
-    def range(self, value: Union[List[int], Tuple[int, int]]) -> Terminal:
+    def range(self, value: Dict[str, Any]) -> Terminal:
         """Attribute is within the specified half-open range
 
         Args:
@@ -712,7 +718,7 @@ class PartialQuery:
         ...
 
     @_attr_delegate(Attr.range)
-    def range(self, value: Union[List[int], Tuple[int, int]]) -> Query:
+    def range(self, value: Dict[str, Any]) -> Query:
         ...
 
     @_attr_delegate(Attr.exists)
