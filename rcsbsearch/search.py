@@ -380,8 +380,6 @@ class Attr:
     +--------------------+---------------------+
     | range              | attr[start:end]     |
     +--------------------+---------------------+
-    | range_closed       |                     |
-    +--------------------+---------------------+
     | exists             | bool(attr)          |
     +--------------------+---------------------+
     | in\\_              |                     |
@@ -463,21 +461,6 @@ class Attr:
         if isinstance(value, Value):
             value = value.value
         return Terminal(self.attribute, "range", value)
-
-    def range_closed(
-        self,
-        value: Union[
-            List[int], Tuple[int, int], "Value[List[int]]", "Value[Tuple[int, int]]"
-        ],
-    ) -> Terminal:
-        """Attribute is within the specified closed range
-
-        Args:
-            value: lower and upper bounds `[a, b]`
-        """
-        if isinstance(value, Value):
-            value = value.value
-        return Terminal(self.attribute, "range_closed", value)
 
     def exists(self) -> Terminal:
         """Attribute is defined for the structure"""
@@ -730,15 +713,6 @@ class PartialQuery:
 
     @_attr_delegate(Attr.range)
     def range(self, value: Union[List[int], Tuple[int, int]]) -> Query:
-        ...
-
-    @_attr_delegate(Attr.range_closed)
-    def range_closed(
-        self,
-        value: Union[
-            List[int], Tuple[int, int], "Value[List[int]]", "Value[Tuple[int, int]]"
-        ],
-    ) -> Query:
         ...
 
     @_attr_delegate(Attr.exists)
