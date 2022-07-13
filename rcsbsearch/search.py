@@ -195,7 +195,7 @@ class Terminal(Query):
         >>> Terminal(value="tubulin")
 
     A full list of attributes is available in the
-    `schema <http://search.rcsb.org/rcsbsearch/v1/metadata/schema>`_.
+    `schema <http://search.rcsb.org/rcsbsearch/v2/metadata/schema>`_.
     Operators are documented `here <http://search.rcsb.org/#field-queries>`_.
 
     The :py:class:`Attr` class provides a more pythonic way of constructing Terminals.
@@ -392,7 +392,7 @@ class Attr:
     Pre-instantiated attributes are available from the
     :py:data:`rcsbsearch.rcsb_attributes` object. These are generally easier to use
     than constructing Attr objects by hand. A complete list of valid attributes is
-    available in the `schema <http://search.rcsb.org/rcsbsearch/v1/metadata/schema>`_.
+    available in the `schema <http://search.rcsb.org/rcsbsearch/v2/metadata/schema>`_.
 
     """
 
@@ -974,7 +974,7 @@ class Session(Iterable[str]):
     Handles paging the query and parsing results
     """
 
-    url = "http://search.rcsb.org/rcsbsearch/v1/query"
+    url = "http://search.rcsb.org/rcsbsearch/v2/query"
     query_id: str
     query: Query
     return_type: ReturnType

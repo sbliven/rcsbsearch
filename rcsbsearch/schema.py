@@ -14,7 +14,7 @@ import requests
 
 from .search import Attr
 
-METADATA_SCHEMA_URL = "http://search.rcsb.org/rcsbsearch/v1/metadata/schema"
+METADATA_SCHEMA_URL = "http://search.rcsb.org/rcsbsearch/v2/metadata/schema"
 SEARCH_SCHEMA_URL = "http://search.rcsb.org/json-schema-rcsb_search_query.json"
 
 ENV_RCSBSEARCH_DOWNLOAD_SCHEMA = "RCSBSEARCH_DOWNLOAD_SCHEMA"
