@@ -53,6 +53,7 @@ TValue = Union[
     Tuple[int, ...],
     Tuple[float, ...],
     Tuple[date, ...],
+    Dict[str, Any],
 ]
 # Types valid for numeric operators
 TNumberLike = Union[int, float, date, "Value[int]", "Value[float]", "Value[date]"]
@@ -206,7 +207,7 @@ class Terminal(Query):
     operator: Optional[str] = None
     value: Optional[TValue] = None
     service: str = "text"
-    negation: bool = False
+    negation: Optional[bool] = False
     node_id: int = 0
 
     def to_dict(self):
