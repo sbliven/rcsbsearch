@@ -986,7 +986,7 @@ class Session(Iterable[str]):
             query=self.query.to_dict(),
             return_type=self.return_type,
             request_info=dict(query_id=self.query_id, src="ui"),  # TODO src deprecated?
-            request_options=dict(pager=dict(start=start, rows=self.rows)),
+            request_options=dict(paginate=dict(start=start, rows=self.rows)),
         )
 
     def _single_query(self, start=0) -> Optional[Dict]:
