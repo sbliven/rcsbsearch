@@ -274,14 +274,14 @@ class Terminal(Query):
 class TextQuery(Terminal):
     """Special case of a Terminal for free-text queries"""
 
-    def __init__(self, value: str, negation: bool = False):
+    def __init__(self, value: str):
         """Search for the string value anywhere in the text
 
         Args:
             value: free-text query
             negation: find structures without the pattern
         """
-        super().__init__(value=value, negation=negation)
+        super().__init__(service="full_text", value=value, negation=None)
 
 
 @dataclass(frozen=True)
