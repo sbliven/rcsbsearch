@@ -42,7 +42,7 @@ def _download_json_schema():
     "Get the current JSON schema from the web"
     url = METADATA_SCHEMA_URL
 
-    logging.info(f"Dowloading {url}")
+    logging.info(f"Downloading {url}")
     response = requests.get(url)
     response.raise_for_status()
     return response.json()
