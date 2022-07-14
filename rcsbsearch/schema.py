@@ -14,7 +14,7 @@ import requests
 
 from .search import Attr
 
-METADATA_SCHEMA_URL = "http://search.rcsb.org/rcsbsearch/v1/metadata/schema"
+METADATA_SCHEMA_URL = "http://search.rcsb.org/rcsbsearch/v2/metadata/schema"
 SEARCH_SCHEMA_URL = "http://search.rcsb.org/json-schema-rcsb_search_query.json"
 
 ENV_RCSBSEARCH_DOWNLOAD_SCHEMA = "RCSBSEARCH_DOWNLOAD_SCHEMA"
@@ -42,7 +42,7 @@ def _download_json_schema():
     "Get the current JSON schema from the web"
     url = METADATA_SCHEMA_URL
 
-    logging.info(f"Dowloading {url}")
+    logging.info(f"Downloading {url}")
     response = requests.get(url)
     response.raise_for_status()
     return response.json()

@@ -49,7 +49,7 @@ a heat-shock transcription factor.
         print(assemblyid)
 
 For a full list of attributes, please refer to the [RCSB
-schema](http://search.rcsb.org/rcsbsearch/v1/metadata/schema).
+schema](http://search.rcsb.org/rcsbsearch/v2/metadata/schema).
 
 ### Fluent Example
 
